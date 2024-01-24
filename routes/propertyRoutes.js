@@ -7,6 +7,9 @@ const mongoose = require('mongoose');
 router.get('/', async (req, res) => {
   try {
     const properties = await Property.find().select('-images ');
+    if (properties.length === 0) {
+      return res.json({ message: 'We couldnt find any properties...' });
+    }
     res.json(properties);
   } catch (err) {
     res.status(500).json({ message: err.message });
